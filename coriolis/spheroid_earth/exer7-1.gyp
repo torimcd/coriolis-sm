@@ -13,9 +13,8 @@ website: https://github.com/torimcd
 """
 
 import cartopy.crs as ccrs
-from mpl_toolkits.mplot3d import Axes3D
-from mayavi import mlab
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import matplotlib.animation as animation
 import numpy as np
 
@@ -38,15 +37,6 @@ import numpy as np
         # execute one time step of length dt and update state
  """
 
-class oblate_spheroid(object):
-    """ Spheroid class
-        Each spheroid is the base shape on which the particles travel
-
-        init_state is the initial state of the spheroid
-    """
-    def __init__(self):
-        # the initial state of the spheroid
-
 
 
 # -----------------------------------------
@@ -68,21 +58,62 @@ v = 0;      # northward velocity
 # ------------------------------------------
 # set up figure and animation
 
-fig = plt.figure(figsize=(6,6))
+fig = plt.figure()
 
-central_lat = 50
-central_lon = -73
+ax_fixed = fig.add_subplot(121, aspect='auto')
 
-# with cartopy - spherical - not oblate
-#ax = plt.axes(projection=ccrs.Orthographic())
-#ax.gridlines()
+# create oblate spheroids out of ellipse patches for outline and lats
+fixed_outline = patches.Ellipse((0,0), 12, 10, 0, linewidth=2, fill=False)
+fixed_center_lat = patches.Ellipse((0,0), 12, 10*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+
+c9 = 5*np.sin((np.pi)/6)*np.cos((np.pi)/16)
+c8 = 5*np.sin((np.pi)/3)*np.cos((np.pi)/16)
+
+fixed_mid_lat_up = patches.Ellipse((0,0+c9), 12*np.cos((np.pi)/6), 7.5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+fixed_mid_lat_down = patches.Ellipse((0,0-c9), 12*np.cos((np.pi)/6), 7.5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+fixed_pole_lat_up = patches.Ellipse((0,0+c8), 12*np.cos((np.pi)/3), 5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+fixed_pole_lat_down = patches.Ellipse((0,0-c8), 12*np.cos((np.pi)/3), 5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+
+# add the ellipses to the plot
+ax_fixed.add_patch(fixed_outline)
+ax_fixed.add_patch(fixed_center_lat)
+ax_fixed.add_patch(fixed_mid_lat_up)
+ax_fixed.add_patch(fixed_mid_lat_down)
+ax_fixed.add_patch(fixed_pole_lat_up)
+ax_fixed.add_patch(fixed_pole_lat_down)
+ax_fixed.set_aspect('equal')
 
 
-# with spherical coordinates
-ax_fixed = fig.add_subplot(111, projection='3d')
+ax_rot = fig.add_subplot(122, aspect='auto')
+# create ellipse patches for outline and lats
+rot_outline = patches.Ellipse((0,0), 12, 10, 0, linewidth=2, fill=False)
+rot_center_lat = patches.Ellipse((0,0), 12, 10*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
 
+rot_mid_lat_up = patches.Ellipse((0,0+c9), 12*np.cos((np.pi)/6), 7.5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+rot_mid_lat_down = patches.Ellipse((0,0-c9), 12*np.cos((np.pi)/6), 7.5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+rot_pole_lat_up = patches.Ellipse((0,0+c8), 12*np.cos((np.pi)/3), 5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
+rot_pole_lat_down = patches.Ellipse((0,0-c8), 12*np.cos((np.pi)/3), 5*np.sin((np.pi)/16), 0, linewidth=2, fill=False)
 
-ax_rot = fig.add_subplot(121, projection='3d')
+# add the ellipses to the plot
+ax_rot.add_patch(rot_outline)
+ax_rot.add_patch(rot_center_lat)
+ax_rot.add_patch(rot_mid_lat_up)
+ax_rot.add_patch(rot_mid_lat_down)
+ax_rot.add_patch(rot_pole_lat_up)
+ax_rot.add_patch(rot_pole_lat_down)
 
+ax_rot.set_aspect('equal')
+
+ax_fixed.set_xlim((-8, 8))
+ax_fixed.set_ylim((-8, 8))
+
+ax_rot.set_xlim((-8, 8))
+ax_rot.set_ylim((-8, 8))
+
+# Turn off tick labels
+ax_fixed.set_yticklabels([])
+ax_fixed.set_xticklabels([])
+ax_rot.set_yticklabels([])
+ax_rot.set_xticklabels([])
 
 plt.show()
