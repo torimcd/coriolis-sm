@@ -22,6 +22,8 @@ line_ani = animation.FuncAnimation(fig1, update_line, 25, fargs=(data, l),
                                    interval=50, blit=True)
 
 
+#---------------------------------------------------------
+
 fig2 = plt.figure()
 
 x = np.arange(-9, 10)

@@ -17,32 +17,28 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from coriolis_tools import tools
 
-def restart():
-    '''
-    Function to set all parameters to their initial states.
 
-    '''
-    FAC = 10
-    FFF = 10
-    FFC = 10
-    CA = 3
+FAC = 10
+FFF = 10
+FFC = 10
+CA = 3
 
-    time = 0 # initial time is 0
-    dt = 1  # timestep increass by 1
+time = 0 # initial time is 0
+dt = 1  # timestep increass by 1
 
-    # set the initial position of the particle at the origin
-    x=0
-    y=0
+# set the initial position of the particle at the origin
+x=0
+y=0
 
-    # set random initial values for dx and dy
-    dxdt = FFC*(tools.rnd()-0.5)
-    dydt = FFC*(tools.rnd()-0.5)
+# set random initial values for dx and dy
+dxdt = FFC*(tools.rnd()-0.5)
+dydt = FFC*(tools.rnd()-0.5)
 
-    force_x_direction = FFF*(tools.rnd()-0.5)
-    force_y_direction = FFF*(tools.rnd()-0.5)
+force_x_direction = FFF*(tools.rnd()-0.5)
+force_y_direction = FFF*(tools.rnd()-0.5)
 
 
-def get_particle_position(x, y, force_x, force_y, time):
+def update_particle_position(frame, x, y, force_x, force_y, time):
     '''
     Function to return the next particle position given the current position, current forcing, and time step
     -----------
