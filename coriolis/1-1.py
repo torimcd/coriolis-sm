@@ -26,27 +26,31 @@ ax.set_ylim(-100, 100), ax.set_yticks([])
 # Create particle
 particle = {}
 
+force_scale_factor = 10
+arrow_scale_factor = 10
+trajectory_scale_factor = 10
+
 # Initialize the particles at 0,0 with random velocity
 particle['position'] = (0, 0)
-particle['velocity'] = (tools.rnd()-0.5, tools.rnd()-0.5)
+particle['velocity'] = (trajectory_scale_factor*(tools.rnd()-0.5), trajectory_scale_factor*(tools.rnd()-0.5))
 particle['force'] =  (0, 0)
 particle['curve'] = (0, 0)
 
-force_x_direction = (tools.rnd()-0.5)
-force_y_direction = (tools.rnd()-0.5)
+force_x_direction = force_scale_factor*(tools.rnd()-0.5)
+force_y_direction = force_scale_factor*(tools.rnd()-0.5)
 
 arrow_x = 1
 arrow_y = -1
-arrow_dx = arrow_x + force_x_direction
-arrow_dy = arrow_y + force_y_direction
+arrow_dx = arrow_scale_factor*force_x_direction
+arrow_dy = arrow_scale_factor*force_y_direction
 
 # Construct the scatter which we will update during animation
 # as the raindrops develop.
-pos, = ax.plot([], [], 'ro')
+pos, = ax.plot([], [], 'ro', ms=2)
 #arrow = ax.arrow(arrow_x, arrow_y, arrow_dx, arrow_dy, color='y', width=0.05, shape='full', visible=True)
 
 def update(frame):
-    arrow = ax.arrow(arrow_x, arrow_y, arrow_dx, arrow_dy, color='y', width=0.05, shape='full', visible=True)
+    arrow = ax.arrow(arrow_x, arrow_y, arrow_dx, arrow_dy, color='y', width=0.5, shape='full', visible=True)
     if frame < 10:
         force_x = 0
         force_y = 0
@@ -58,14 +62,19 @@ def update(frame):
     print(frame)
     particle['curve'] = (force_x, force_y)
 
-    particle['velocity'] = (particle['curve'][0]*frame + particle['velocity'][0], particle['curve'][1]*frame + particle['velocity'][1])
+    particle['velocity'] = (particle['curve'][0]+ particle['velocity'][0], particle['curve'][1] + particle['velocity'][1])
 
-    particle['position'] = (particle['velocity'][0]*frame + particle['position'][0], particle['velocity'][1]*frame + particle['position'][1])
+    particle['position'] = (particle['velocity'][0] + particle['position'][0], particle['velocity'][1] + particle['position'][1])
+
 
     pos.set_data(particle['position'][0], particle['position'][1])
+    ax.plot(particle['position'][0], particle['position'][1], 'ro', ms=2)
+
+    return pos
 
 def init():
     pos.set_data([], [])
+    return pos
 
 # Construct the animation, using the update function as the animation director.
 animation = FuncAnimation(fig, update, init_func=init, frames=20, interval=500, repeat=False, blit=False)
