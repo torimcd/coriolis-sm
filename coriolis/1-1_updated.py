@@ -68,7 +68,7 @@ def update(frame):
         force_y = 0
     else:
         # after 10 steps turn the force on
-        ax.add_patch(patches.Arrow(arrow_x, arrow_y, arrow_dx, arrow_dy, facecolor='gold', width=4, visible=True))
+        ax.add_patch(patches.Arrow(arrow_x, arrow_y, arrow_dx, arrow_dy, color='y', width=2, visible=True))
         force_x = force_x_direction
         force_y = force_y_direction
 
