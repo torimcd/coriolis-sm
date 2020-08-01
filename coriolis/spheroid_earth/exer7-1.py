@@ -44,15 +44,105 @@ import numpy as np
 
 pi = np.pi    # pi
 w = 10         # rotation rate of the earth (angular velocity) (m/s) right hand sphere
-w2 = w^2      
+w2 = w^2       # the bulge of the sphereoid - set to zero for a perfect sphere
 dt = 0.005  
 fact = 60      # scale of the display
 inc = pi/16    # inclination of the spheres  
-lat = 0          # latitude
-lon = 0       # longitude
+lat = {}          # latitude
+lon = {}       # longitude
+dlat = {}
+dlon = {}
+ddlat = {}
+ddlon = {}
+t=0
+rho = {}
+x = {}
+y = {}
+z = {}
+c = {}
 
 u = 0      # eastward velocity
 v = 0      # northward velocity
+
+# ---------------------------------------
+# ask user for latitiude and u,v
+latitude = 40 #input("Enter a latitude:  ")
+(u, v) = 1,2 #input("Enter values for u, v: ")
+
+print(u)
+print(v)
+
+# NOTE: python is zero based so the particles are stored as 0,1,2,3 instead of 1,2,3,4
+# for ease of reading along with the book, index 1 has been kept as the expert in absolute space,
+# index 2 has been kept as the novice in absolute space
+# index 3 has been kept as the expert in  moving reference frame
+# index 4 has been moved to index 0 - the novice in the moving reference frame
+
+for i in range(4):
+    lat[i] = latitude*pi/180
+    lon[i] = -pi/2
+
+dlat[1] = 0
+dlat[3] = 0
+dlat[2] = v
+dlat[0] = dlat[2]
+
+dlon[2] = u/np.cos(lat[1]) + w
+dlon[0] = dlon[2]
+
+# integration in absolute frame
+ddlon[2] = 2*np.tan(lat[2])*dlat[2]*dlon[2]
+
+aaa = np.sin(lat[2])*np.cos(lat[2])
+bbb = (w2 - (dlon[2]))**2
+
+ddlat[2] = aaa*bbb
+
+dlon[2] = dlon[2] + dt*ddlon[2]
+dlat[2] = dlat[2] + dt*ddlat[2]
+
+t = t+dt
+
+lat[2] = lat[2] + dt*dlat[2]
+lon[2] = lon[2] + dt*dlon[2]
+
+lon[0] = lon[2] - w*t
+
+# integration in relative frame using x,y coordinates
+lat[0] = lat[2]
+lon[1] = lon[1] + w*dt
+
+for i in range(4):
+    rho[i] = np.cos(lat[i])
+    x[i] = rho[i]*np.cos(lon[i])
+    y[i] = rho[i]*np.sin(lon[i])*np.sin(inc)
+    z[i] = y[i] + np.sin(lat[i])*np.cos(inc)
+
+# set the color of the particle based on its position
+if y[2] < 0:
+    c[1] = 'red'
+else:
+    c[1] = 'green'
+
+if y[2] < 0:
+    c[2] = 'yellow'
+else:
+    c[2] = 'green'
+
+if y[3] < 0:
+    c[3] = 'red'
+else:
+    c[3] = 'green'
+
+if y[0] < 0:
+    c[0] = 'yellow'
+else:
+    c[0] = 'red'
+
+
+
+
+
 
 
 # ------------------------------------------

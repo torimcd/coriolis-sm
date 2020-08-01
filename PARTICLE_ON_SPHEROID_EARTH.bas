@@ -20,7 +20,7 @@
 3130 LAD(1)=0: LAD(3)=0             ' set the time derivatives for lat and lon for experts
 3131 LAD(2)=V:LAD(4)=LAD(2)         ' set the time derivatives for lat and lon for novices
 3140 LOCATE 23,20:INPUT "u,v";U,V   ' ask for user to enter the starting velocity, relative to rotating planet
-3150 LAD(1)=0: LAD(3)-0
+3150 LAD(1)=0: LAD(3)=0
 3151 LAD(2)=V:LAD(4)=LAD(2)
 3160 LOD(2)=U/COS(LA(1))+W : LOD(4)=LOD(2)
 3170 LODD(2)=2*TAN(LA(2))*LAD(2)*LOD(2)     ' integration in absolute frame
@@ -59,7 +59,7 @@
 
 3360 J=INC: 'PLOT THE TWO SPHERES"
 3370 FOR I=0 TO 1
-3380 CIRCLE (220-150*I,90),60,1,0,2*PI,1
+3380 CIRCLE (220-150*I,90),60,1,0,2*PI,1        ' CIRCLE (x,y)
 3390 CIRCLE (220-150*I,90),60,1,0,2*PI,SIN(J)
 3400 C9=60*SIN(PI/6)*COS(J)
 3405 AN=SIN(J)
