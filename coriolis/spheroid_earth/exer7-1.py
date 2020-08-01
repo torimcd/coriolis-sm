@@ -142,9 +142,6 @@ else:
 
 
 
-
-
-
 # ------------------------------------------
 # set up figure and animation
 
@@ -153,16 +150,16 @@ fig = plt.figure()
 ax_fixed = fig.add_subplot(121, aspect='auto')
 
 # create oblate spheroids out of ellipse patches for outline and lats
-fixed_outline = patches.Ellipse((0,0), 12, 10, 0, linewidth=2, fill=False)
-fixed_center_lat = patches.Ellipse((0,0), 12, 10*np.sin(inc), 0, linewidth=1, fill=False)
+fixed_outline = patches.Ellipse((0,0), 60, 60, 0, linewidth=2, fill=False)
+fixed_center_lat = patches.Ellipse((0,0), 60, 60*np.sin(inc), 0, linewidth=1, fill=False)
 
-c9 = 5*np.sin(pi/6)*np.cos(inc)
-c8 = 5*np.sin(pi/3)*np.cos(inc)
+c9 = 30*np.sin(pi/6)*np.cos(inc)
+c8 = 30*np.sin(pi/3)*np.cos(inc)
 
-fixed_mid_lat_up = patches.Ellipse((0,0+c9), 12*np.cos(pi/6), 7.5*np.sin(inc), 0, linewidth=1, fill=False)
-fixed_mid_lat_down = patches.Ellipse((0,0-c9), 12*np.cos(pi/6), 7.5*np.sin(inc), 0, linewidth=1, fill=False)
-fixed_pole_lat_up = patches.Ellipse((0,0+c8), 12*np.cos(pi/3), 5*np.sin(inc), 0, linewidth=1, fill=False)
-fixed_pole_lat_down = patches.Ellipse((0,0-c8), 12*np.cos(pi/3), 5*np.sin(inc), 0, linewidth=1, fill=False)
+fixed_mid_lat_up = patches.Ellipse((0,0+c9), 60*np.cos(pi/6), 60*np.sin(inc), 0, linewidth=1, fill=False)
+fixed_mid_lat_down = patches.Ellipse((0,0-c9), 60*np.cos(pi/6), 60*np.sin(inc), 0, linewidth=1, fill=False)
+fixed_pole_lat_up = patches.Ellipse((0,0+c8), 60*np.cos(pi/3), 30*np.sin(inc), 0, linewidth=1, fill=False)
+fixed_pole_lat_down = patches.Ellipse((0,0-c8), 60*np.cos(pi/3), 30*np.sin(inc), 0, linewidth=1, fill=False)
 
 # add the ellipses to the plot
 ax_fixed.add_patch(fixed_outline)
@@ -179,13 +176,13 @@ plt.axis('off')
 
 ax_rot = fig.add_subplot(122, aspect='auto')
 # create ellipse patches for outline and lats
-rot_outline = patches.Ellipse((0,0), 12, 10, 0, linewidth=2, fill=False)
-rot_center_lat = patches.Ellipse((0,0), 12, 10*np.sin(inc), 0, linewidth=1, fill=False)
+rot_outline = patches.Ellipse((0,0), 60, 60, 0, linewidth=2, fill=False)
+rot_center_lat = patches.Ellipse((0,0), 60, 60*np.sin(inc), 0, linewidth=1, fill=False)
 
-rot_mid_lat_up = patches.Ellipse((0,0+c9), 12*np.cos(pi/6), 7.5*np.sin(inc), 0, linewidth=1, fill=False)
-rot_mid_lat_down = patches.Ellipse((0,0-c9), 12*np.cos(pi/6), 7.5*np.sin(inc), 0, linewidth=1, fill=False)
-rot_pole_lat_up = patches.Ellipse((0,0+c8), 12*np.cos(pi/3), 5*np.sin(inc), 0, linewidth=1, fill=False)
-rot_pole_lat_down = patches.Ellipse((0,0-c8), 12*np.cos(pi/3), 5*np.sin(inc), 0, linewidth=1, fill=False)
+rot_mid_lat_up = patches.Ellipse((0,0+c9), 60*np.cos(pi/6), 60*np.sin(inc), 0, linewidth=1, fill=False)
+rot_mid_lat_down = patches.Ellipse((0,0-c9), 60*np.cos(pi/6), 60*np.sin(inc), 0, linewidth=1, fill=False)
+rot_pole_lat_up = patches.Ellipse((0,0+c8), 60*np.cos(pi/3), 30*np.sin(inc), 0, linewidth=1, fill=False)
+rot_pole_lat_down = patches.Ellipse((0,0-c8), 60*np.cos(pi/3), 30*np.sin(inc), 0, linewidth=1, fill=False)
 
 # add the ellipses to the plot
 ax_rot.add_patch(rot_outline)
@@ -197,11 +194,14 @@ ax_rot.add_patch(rot_pole_lat_down)
 
 ax_rot.set_aspect('equal')
 
-ax_fixed.set_xlim((-8, 8))
-ax_fixed.set_ylim((-8, 8))
+ax_fixed.set_xlim((-35, 35))
+ax_fixed.set_ylim((-35, 35))
 
-ax_rot.set_xlim((-8, 8))
-ax_rot.set_ylim((-8, 8))
+ax_rot.set_xlim((-35, 35))
+ax_rot.set_ylim((-35, 35))
+
+ax_fixed.set_title("Absolute")
+ax_rot.set_title("Relative")
 
 # Turn off axes
 plt.axis('off')
