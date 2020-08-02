@@ -14,7 +14,7 @@
 3091 DT=0.005: FACT = 60:INC=PI/16
 3100 GOSUB 3360
 
-3110 LOCATE 23,1:INPUTE "lat";LA    ' ask for user to enter a latitude
+3110 LOCATE 23,1:INPUT "lat";LA    ' ask for user to enter a latitude
 3120 FOR I=1 TO 4:LA(I)=LA*PI/180   ' start all particles at the chosen latitude
 3121 LO(I) = -PI/2  :NEXT           ' set the same starting longitude
 3130 LAD(1)=0: LAD(3)=0             ' set the time derivatives for lat and lon for experts
