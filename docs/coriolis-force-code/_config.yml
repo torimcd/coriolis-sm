@@ -1,0 +1,8 @@
+# Book settings
+title: Coriolis Force Code
+author: Victoria McDonald
+logo: logo.png
+
+latex:
+  latex_documents:
+    targetname: book.tex
