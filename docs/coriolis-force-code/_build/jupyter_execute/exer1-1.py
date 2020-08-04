@@ -109,4 +109,4 @@ def init():
 animation = FuncAnimation(fig, update, init_func=init, frames=20, interval=500, repeat=False, blit=False)
 
 # convert to a video to be embedded in web page
-HTML(animation.to_html5_video())
+HTML(animation.to_jshtml())
