@@ -1,15 +1,13 @@
 - file: intro
 - file: ch1
-  sections:
-    - file: exer1-1
+- file: exer1-1
 - file: ch2
 - file: ch3
 - file: ch4
 - file: ch5
 - file: ch6
 - file: ch7
-  sections:
-    - file: exer7-1
+- file: exer7-1
 - file: ch8
 - file: ch9
 - file: ch10
