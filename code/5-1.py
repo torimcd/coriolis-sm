@@ -106,7 +106,6 @@ ax_1_below.set_title("plane")
 ax_2_below.set_title("paraboloid")
 ax_3_below.set_title("hemisphere")
 
-fig.tight_layout()
 
 # set up the particles
 plane = ax_1.plot([], [], color='green')[0]
