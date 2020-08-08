@@ -15,10 +15,11 @@ import numpy as np
 from IPython.display import HTML
 %matplotlib inline
 
-Here we set values for the starting latitude and components of the velocity. In the original GW-BASIC, the program prompts the user to enter values each time they rerun the program. Here you are encouraged to download the notebook or code file and experiment with different values on your own.
+Here we set values for the starting latitude and components of the velocity. In the original GW-BASIC, the program prompts the user to enter values each time they rerun the program. Here you are encouraged to download the code and experiment with different values on your own.
 
 latitude = 45
-(u, v) = 0,2
+u = 0
+v = 2
 
 NOTE: python is zero based so the particles are stored as 0,1,2,3 instead of 1,2,3,4
 For ease of reading along with the book, only the particle with index 4 has changed:
@@ -94,8 +95,8 @@ ax_fixed.set_aspect('equal')
 # Turn off axes
 plt.axis('off')
 
-ax_fixed.set_xlim((-80, 80))
-ax_fixed.set_ylim((-80, 80))
+ax_fixed.set_xlim((-70, 70))
+ax_fixed.set_ylim((-70, 70))
 
 ax_fixed.set_title("Absolute")
 # --------
@@ -125,8 +126,8 @@ ax_rot.set_aspect('equal')
 # Turn off axes
 plt.axis('off')
 
-ax_rot.set_xlim((-80, 80))
-ax_rot.set_ylim((-80, 80))
+ax_rot.set_xlim((-70, 70))
+ax_rot.set_ylim((-70, 70))
 
 ax_rot.set_title("Relative")
 # --------
@@ -135,23 +136,23 @@ ax_rot.set_title("Relative")
 Set up the four particles with empty data that will be filled during each step of the animation
 
 # set up the four particles
-fixed_expert = ax_fixed.plot([], [], marker='o', ms=3, label='Expert')[0]
-fixed_novice = ax_fixed.plot([], [], marker='o', ms=2, label='Novice')[0]
-rotating_expert = ax_rot.plot([], [], marker='o', ms=3)[0]
-rotating_novice = ax_rot.plot([], [], marker='o', ms=2)[0]
+fixed_expert = ax_fixed.plot([], [], marker='o', ms=5, label='Expert')[0]
+fixed_novice = ax_fixed.plot([], [], marker='o', ms=4, label='Novice')[0]
+rotating_expert = ax_rot.plot([], [], marker='o', ms=5)[0]
+rotating_novice = ax_rot.plot([], [], marker='o', ms=4)[0]
 
 # ------ Set up legend 
-ax_fixed.annotate('Expert: ', (-75, -70), color='k', weight='bold', fontsize=8)
-ax_fixed.annotate('Novice: ', (-75, -80), color='k', weight='bold', fontsize=8)
+ax_fixed.annotate('Expert: ', (-70, -60), color='k', weight='bold', fontsize=8)
+ax_fixed.annotate('Novice: ', (-70, -70), color='k', weight='bold', fontsize=8)
 
-ax_fixed.plot(-33, -65, color='red', marker='o', ms=3)
-ax_fixed.plot(-33, -76, color='gold', marker='o', ms=2)
+ax_fixed.plot(-33, -57, color='red', marker='o', ms=5)
+ax_fixed.plot(-33, -68, color='gold', marker='o', ms=4)
 
-ax_fixed.annotate('On back, expert: ', (45, -70), color='k', weight='bold', fontsize=8)
-ax_fixed.annotate('               novice: ', (45, -80), color='k', weight='bold', fontsize=8)
+ax_fixed.annotate('On back, expert: ', (45, -60), color='k', weight='bold', fontsize=8)
+ax_fixed.annotate('               novice: ', (45, -70), color='k', weight='bold', fontsize=8)
 
-ax_rot.plot(-65, -65, color='green', marker='o', ms=3)
-ax_rot.plot(-65, -76, color='limegreen', marker='o', ms=2)
+ax_rot.plot(-45, -57, color='green', marker='o', ms=5)
+ax_rot.plot(-45, -68, color='limegreen', marker='o', ms=4)
 
 The is the function that updates the particles' positions
 
@@ -246,3 +247,4 @@ This controls the animation, using the update function, and then converts the an
 animation = FuncAnimation(fig, update, frames=500, interval=50, repeat=False, blit=False)
 
 HTML(animation.to_jshtml())
+

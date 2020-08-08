@@ -20,9 +20,13 @@ import numpy as np
 # ---------------------------------------
 # ask user for latitiude and u,v
 
-latitude = 45 #input("Enter a latitude:  ")
-(u, v) = 0,2 #input("Enter values for u, v: ")
+latitude_in = input("Enter a latitude:  ")
+u_in = input("Enter a value for u: ")
+v_in = input("Enter a value for v: ")
 
+latitude = float(latitude_in)
+u = float(u_in)
+v = float(v_in)
 
 # -----------------------------------------
 # set up global variables
@@ -66,6 +70,7 @@ dlon[0] = dlon[2]
 
 fig = plt.figure()
 
+# -------- Create the sphere in the absolute reference frame
 ax_fixed = fig.add_subplot(121, aspect='auto')
 
 # create oblate spheroids out of ellipse patches for outline and lats
@@ -92,15 +97,22 @@ ax_fixed.set_aspect('equal')
 # Turn off axes
 plt.axis('off')
 
+ax_fixed.set_xlim((-70, 70))
+ax_fixed.set_ylim((-70, 70))
 
+ax_fixed.set_title("Absolute")
+# --------
+
+# -------- Create the sphere in the rotating reference frame
 ax_rot = fig.add_subplot(122, aspect='auto')
-# create ellipse patches for outline and lats
-rot_outline = patches.Ellipse((0,0), 120, 120, 0, linewidth=2, fill=False)
-rot_center_lat = patches.Ellipse((0,0), 120, 120*np.sin(inc), 0, linewidth=1, fill=False)
 
-rot_mid_lat_up = patches.Ellipse((0,0+c9), 120*np.cos(pi/6), 120*np.sin(inc), 0, linewidth=1, fill=False)
+# create ellipse patches for the outline and lats
+rot_outline = patches.Ellipse((0,0), 120, 120, 0, linewidth=2, fill=False) # sphere outline
+rot_center_lat = patches.Ellipse((0,0), 120, 120*np.sin(inc), 0, linewidth=1, fill=False) # center lat ellipse
+
+rot_mid_lat_up = patches.Ellipse((0,0+c9), 120*np.cos(pi/6), 120*np.sin(inc), 0, linewidth=1, fill=False) # mid lat ellipses
 rot_mid_lat_down = patches.Ellipse((0,0-c9), 120*np.cos(pi/6), 120*np.sin(inc), 0, linewidth=1, fill=False)
-rot_pole_lat_up = patches.Ellipse((0,0+c8), 120*np.cos(pi/3), 60*np.sin(inc), 0, linewidth=1, fill=False)
+rot_pole_lat_up = patches.Ellipse((0,0+c8), 120*np.cos(pi/3), 60*np.sin(inc), 0, linewidth=1, fill=False) # pole lat ellipses
 rot_pole_lat_down = patches.Ellipse((0,0-c8), 120*np.cos(pi/3), 60*np.sin(inc), 0, linewidth=1, fill=False)
 
 # add the ellipses to the plot
@@ -113,36 +125,34 @@ ax_rot.add_patch(rot_pole_lat_down)
 
 ax_rot.set_aspect('equal')
 
-ax_fixed.set_xlim((-80, 80))
-ax_fixed.set_ylim((-80, 80))
-
-ax_rot.set_xlim((-80, 80))
-ax_rot.set_ylim((-80, 80))
-
-ax_fixed.set_title("Absolute")
-ax_rot.set_title("Relative")
-
 # Turn off axes
 plt.axis('off')
 
+ax_rot.set_xlim((-70, 70))
+ax_rot.set_ylim((-70, 70))
+
+ax_rot.set_title("Relative")
+# --------
+
+
 # set up the four particles
-fixed_expert = ax_fixed.plot([], [], marker='o', ms=3, label='Expert')[0]
-fixed_novice = ax_fixed.plot([], [], marker='o', ms=2, label='Novice')[0]
-rotating_expert = ax_rot.plot([], [], marker='o', ms=3)[0]
-rotating_novice = ax_rot.plot([], [], marker='o', ms=2)[0]
+fixed_expert = ax_fixed.plot([], [], marker='o', ms=5, label='Expert')[0]
+fixed_novice = ax_fixed.plot([], [], marker='o', ms=4, label='Novice')[0]
+rotating_expert = ax_rot.plot([], [], marker='o', ms=5)[0]
+rotating_novice = ax_rot.plot([], [], marker='o', ms=4)[0]
 
-ax_fixed.annotate('Expert: ', (-75, -70), color='k', weight='bold', fontsize=8)
-ax_fixed.annotate('Novice: ', (-75, -80), color='k', weight='bold', fontsize=8)
+# ------ Set up legend 
+ax_fixed.annotate('Expert: ', (-70, -60), color='k', weight='bold', fontsize=8)
+ax_fixed.annotate('Novice: ', (-70, -70), color='k', weight='bold', fontsize=8)
 
-ax_fixed.plot(-33, -65, color='red', marker='o', ms=3)
-ax_fixed.plot(-33, -76, color='gold', marker='o', ms=2)
+ax_fixed.plot(-33, -57, color='red', marker='o', ms=5)
+ax_fixed.plot(-33, -68, color='gold', marker='o', ms=4)
 
+ax_fixed.annotate('On back, expert: ', (45, -60), color='k', weight='bold', fontsize=8)
+ax_fixed.annotate('               novice: ', (45, -70), color='k', weight='bold', fontsize=8)
 
-ax_fixed.annotate('On back, expert: ', (45, -70), color='k', weight='bold', fontsize=8)
-ax_fixed.annotate('               novice: ', (45, -80), color='k', weight='bold', fontsize=8)
-
-ax_rot.plot(-65, -65, color='green', marker='o', ms=3)
-ax_rot.plot(-65, -76, color='limegreen', marker='o', ms=2)
+ax_rot.plot(-45, -57, color='green', marker='o', ms=5)
+ax_rot.plot(-45, -68, color='limegreen', marker='o', ms=4)
 
 
 # ------------------------------------------------
