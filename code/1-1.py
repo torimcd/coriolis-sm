@@ -18,12 +18,6 @@ import matplotlib.patches as patches
 from matplotlib.animation import FuncAnimation
 from coriolis_tools import tools
 
-# Create new Figure and an Axes which fills it.
-fig = plt.figure(figsize=(7, 7))
-ax = fig.add_axes([0, 0, 1, 1], frameon=False)
-ax.set_xlim(-100, 100), ax.set_xticks([])
-ax.set_ylim(-100, 100), ax.set_yticks([])
-
 # set constants
 force_scale_factor = 10
 arrow_scale_factor = 10
@@ -44,6 +38,12 @@ arrow_x = 0
 arrow_y = 0
 arrow_dx = 0
 arrow_dy = 0
+
+# Create new Figure and an Axes which fills it.
+fig = plt.figure(figsize=(7, 7))
+ax = fig.add_axes([0, 0, 1, 1], frameon=False)
+ax.set_xlim(-100, 100), ax.set_xticks([])
+ax.set_ylim(-100, 100), ax.set_yticks([])
 
 # Construct the plot which we will update during animation
 # as the particle moves.
