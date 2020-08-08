@@ -21,10 +21,14 @@ from IPython.display import HTML
 %matplotlib inline
 
 
+This function returns a random number between 1 and 0. In the python code files in the repository is is contained in the coriolis_tools module and is reused in multiple exercises.
+
 def rnd():
     ''' Helper function returns a random number between 0 and 1 '''
     rand = random.uniform(0,1)
     return rand
+
+Here we set up initial values for the constants, and initialize the objects holding the variables that change on each step of the animation.
 
 # set constants
 force_scale_factor = 10
@@ -47,6 +51,8 @@ arrow_y = 0
 arrow_dx = 0
 arrow_dy = 0
 
+The following code sets up the figure and empty plot object for the position of the particle. The x, y values are updated and set in the update() function for each step of the animation.
+
 %%capture
 
 # Create new Figure and an Axes which fills it.
@@ -59,6 +65,8 @@ ax.set_ylim(-100, 100), ax.set_yticks([])
 # as the particle moves.
 pos, = ax.plot([], [], 'ro', ms=2, animated=True)
 
+
+This is the update function that calculates the new position of the particle depending on whether the force is turned on or not
 
 # number of frames in each animation
 n=20
@@ -99,6 +107,8 @@ def update(frame):
     pos.set_data(x[-n:], y[-n:])
 
     return pos
+
+This init() function initializes the animation and resets the plot when the animation repeats when run in the python code file. Here only one run of the animation is visible through the embedded player below. If you download the python code files in the repository the animation repeats with new random values for the particle's initial trajectory and the magnitude of the force. 
 
 def init():
     global x
@@ -142,6 +152,8 @@ def init():
     pos.set_data([], [])
     return pos
 
+
+Here we construct the animation and embed an animation of a single run in this webpage. If you download this Jupyter Notebook file, or the python code files from the repository, each time you run the below code a different trajectory and force will be applied. 
 
 # Construct the animation, using the update function as the animation director.
 animation = FuncAnimation(fig, update, init_func=init, frames=n-1, interval=300, repeat=True, blit=False)
